@@ -79,6 +79,7 @@ export const communityPlanTableData: FeatureTableColumn = {
     {
       users: "≤10 users",
       items: [
+        { term: "" },
         {
           term: "Public & Private Repos",
           availability: true,
@@ -119,20 +120,23 @@ export const communityPlanTableData: FeatureTableColumn = {
           term: "Bitbucket",
           availability: true,
         },
-        {
-          term: "Multi-IDE support",
-          availability: true,
-        },
-        {
-          term: "Admin Dashboard",
-          availability: true,
-        },
+
         {
           term: "Shared workspaces",
           availability: true,
         },
         {
           term: "Snapshots",
+          availability: true,
+        },
+        { term: "" },
+        { term: "" },
+        {
+          term: "Multi-IDE support",
+          availability: true,
+        },
+        {
+          term: "Admin Dashboard",
           availability: true,
         },
         {
@@ -160,6 +164,7 @@ export const communityPlanTableData: FeatureTableColumn = {
     {
       users: ">10 users",
       items: [
+        { term: "" },
         {
           term: "Public & Private Repos",
           availability: true,
@@ -200,14 +205,7 @@ export const communityPlanTableData: FeatureTableColumn = {
           term: "Bitbucket",
           availability: true,
         },
-        {
-          term: "Multi-IDE support",
-          availability: true,
-        },
-        {
-          term: "Admin Dashboard",
-          availability: true,
-        },
+
         {
           term: "Shared workspaces",
           availability: false,
@@ -215,6 +213,16 @@ export const communityPlanTableData: FeatureTableColumn = {
         {
           term: "Snapshots",
           availability: false,
+        },
+        { term: "" },
+        { term: "" },
+        {
+          term: "Multi-IDE support",
+          availability: true,
+        },
+        {
+          term: "Admin Dashboard",
+          availability: true,
         },
         {
           term: "Air gapped environment support",
@@ -256,6 +264,7 @@ export const professionalPlanTableData: FeatureTableColumn = {
     {
       users: ">10 users",
       items: [
+        { term: "" },
         {
           term: "Public & Private Repos",
           availability: true,
@@ -296,20 +305,23 @@ export const professionalPlanTableData: FeatureTableColumn = {
           term: "Bitbucket",
           availability: true,
         },
-        {
-          term: "Multi-IDE support",
-          availability: true,
-        },
-        {
-          term: "Admin Dashboard",
-          availability: true,
-        },
+
         {
           term: "Shared workspaces",
           availability: true,
         },
         {
           term: "Snapshots",
+          availability: true,
+        },
+        { term: "" },
+        { term: "" },
+        {
+          term: "Multi-IDE support",
+          availability: true,
+        },
+        {
+          term: "Admin Dashboard",
           availability: true,
         },
         {
@@ -343,6 +355,10 @@ export const selfHostedToc: FeatureTableToc[] = [
     data: {
       text: "",
     },
+  },
+  {
+    isHeadline: true,
+    headlineText: "Workspace",
   },
   {
     type: "text",
@@ -421,21 +437,7 @@ export const selfHostedToc: FeatureTableToc[] = [
       },
     },
   },
-  {
-    type: "tooltip",
-    data: {
-      text: "Multi-IDE support",
-      tooltip:
-        "Connect Gitpod with your favourite IDE. View <a href='/docs/ides-and-editors'>docs/IDE</a> to see all suported IDE’s.",
-    },
-  },
-  {
-    type: "tooltip",
-    data: {
-      text: "Admin Dashboard",
-      tooltip: "Access to team and project management and configuration.",
-    },
-  },
+
   {
     type: "tooltip",
     data: {
@@ -449,6 +451,31 @@ export const selfHostedToc: FeatureTableToc[] = [
       text: "Snapshots",
       tooltip:
         "Create a copy of your workspace by sharing a snapshot with your team.",
+    },
+  },
+  {
+    type: "text",
+    data: {
+      text: "",
+    },
+  },
+  {
+    isHeadline: true,
+    headlineText: "Business",
+  },
+  {
+    type: "tooltip",
+    data: {
+      text: "Multi-IDE support",
+      tooltip:
+        "Connect Gitpod with your favourite IDE. View <a href='/docs/ides-and-editors'>docs/IDE</a> to see all suported IDE’s.",
+    },
+  },
+  {
+    type: "tooltip",
+    data: {
+      text: "Admin Dashboard",
+      tooltip: "Access to team and project management and configuration.",
     },
   },
   {
