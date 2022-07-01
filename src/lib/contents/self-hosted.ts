@@ -79,7 +79,7 @@ export const communityPlanTableData: FeatureTableColumn = {
     {
       users: "≤10 users",
       items: [
-        { term: "" },
+        { term: "Workspace", isHeadline: true },
         {
           term: "Public & Private Repos",
           availability: true,
@@ -130,7 +130,7 @@ export const communityPlanTableData: FeatureTableColumn = {
           availability: true,
         },
         { term: "" },
-        { term: "" },
+        { term: "Business", isHeadline: true },
         {
           term: "Multi-IDE support",
           availability: true,
@@ -140,7 +140,7 @@ export const communityPlanTableData: FeatureTableColumn = {
           availability: true,
         },
         {
-          term: "Air gapped environment support",
+          term: "Air gapped support",
           availability: false,
         },
         {
@@ -164,7 +164,7 @@ export const communityPlanTableData: FeatureTableColumn = {
     {
       users: ">10 users",
       items: [
-        { term: "" },
+        { term: "Workspace", isHeadline: true },
         {
           term: "Public & Private Repos",
           availability: true,
@@ -215,7 +215,7 @@ export const communityPlanTableData: FeatureTableColumn = {
           availability: false,
         },
         { term: "" },
-        { term: "" },
+        { term: "Business", isHeadline: true },
         {
           term: "Multi-IDE support",
           availability: true,
@@ -225,7 +225,7 @@ export const communityPlanTableData: FeatureTableColumn = {
           availability: true,
         },
         {
-          term: "Air gapped environment support",
+          term: "Air gapped support",
           availability: false,
         },
         {
@@ -264,7 +264,7 @@ export const professionalPlanTableData: FeatureTableColumn = {
     {
       users: ">10 users",
       items: [
-        { term: "" },
+        { term: "Workspace", isHeadline: true },
         {
           term: "Public & Private Repos",
           availability: true,
@@ -315,7 +315,7 @@ export const professionalPlanTableData: FeatureTableColumn = {
           availability: true,
         },
         { term: "" },
-        { term: "" },
+        { term: "Business", isHeadline: true },
         {
           term: "Multi-IDE support",
           availability: true,
@@ -325,7 +325,7 @@ export const professionalPlanTableData: FeatureTableColumn = {
           availability: true,
         },
         {
-          term: "Air gapped environment support",
+          term: "Air gapped support",
           availability: true,
         },
         {

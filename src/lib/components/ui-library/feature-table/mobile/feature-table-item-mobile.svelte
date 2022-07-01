@@ -22,7 +22,11 @@
         {#if definition.type === "tooltip"}
           <QaTooltip text={definition.term} tooltip={definition.data.tooltip} />
         {:else}
-          {definition.term}
+          <span
+            class={definition.isHeadline
+              ? "text-black dark:text-important font-semibold underline"
+              : ""}>{definition.term}</span
+          >
         {/if}
       </div>
     </div>
