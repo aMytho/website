@@ -9,42 +9,47 @@ title: Local Preview of Gitpod Self-Hosted
 
 # Local Preview of Gitpod Self-Hosted
 
-> **Note:** Currently, this Local Preview of Gitpod Self-Hosted is in [alpha](../../references/gitpod-releases). It works only on Linux systems. Windows and Mac
-> support is in the works. See [the relevant issue](https://github.com/gitpod-io/gitpod/issues/9075)
-> for more information.
+> **Note:** Currently, this Local Preview of Gitpod Self-Hosted is in [beta](../../references/gitpod-releases). It does not work on M1 Mac. See [the relevant issue](https://github.com/gitpod-io/gitpod/issues/9075) for more information.
 
 The Local Preview of Gitpod Self-Hosted is the easiest way to try out Gitpod locally without having to build a production setup (i.e. spin up a Kubernetes cluster). This is aimed at users who want to try Self-Hosted Gitpod locally with minimal effort and resource requirements. This is **not intended for production** usage. Please refer to the [Getting Started](./getting-started) page for instructions on how to install Gitpod for production usage.
 
 ## Running the docker container
 
-This install method runs a `k3s` cluster inside a docker container. self-signed certificates are
-automatically created and a self-signed Gitpod instance will be installed into the `k3s` cluster. The
-created instance will be accessible to the user on one of the [docker bridge network](https://docs.docker.com/network/network-tutorial-standalone/#use-the-default-bridge-network)
-IP addresses.
+First, Create a volume to which the gitpod container will attach to.
+
+```bash
+docker volume create gitpod
+```
+
+This install method runs a `k3s` cluster inside a docker container. self-signed certificates are automatically created and a self-signed Gitpod instance will be installed into the `k3s` cluster.
+The Gitpod instance can be accessed through your local private IP address which can be retrieved by running either `ifconfig` (on Mac and Linux) or `ipconfig` (on Windows).
+As Gitpod needs this information in a domain format (and not just a IP address), For this to work an `nip` URL can be created by replacing the `.` with `-`, and suffixing it with `nip.io`. For example, `10.0.0.7` private IP address would become `10-0-0-7.nip.io`. This is then passed to the container through the `DOMAIN` environment variable.
 
 Run the following command to get the `preview-install` docker container up and running:
 
 ```bash
-docker run --privileged --name gitpod --rm -it -v /tmp/gitpod:/var/gitpod eu.gcr.io/gitpod-core-dev/build/preview-install
+docker run -p 443:443 -e DOMAIN=10-0-0-7.nip.io --privileged --name gitpod --rm -it -v gitpod:/var/gitpod eu.gcr.io/gitpod-core-dev/build/preview-install
 ```
 
 Unpacking the above command:
 
+- `-p 443:443` to map the `443` container port to host.
+- `-e DOMAIN=10-0-0-7.nip.io` to pass the DOMAIN to the Gitpod installation. [nip.io](https://nip.io/) is just wildcard DNS for local addresses, so all off this is local, and cannot be accessed over the internet.
 - `--privileged` to be able to run docker (and hence `k3s`) inside the container. This is necessary.
-- `--name gitpod` to set the name of the docker container for further access
-- `/tmp/gitpod:/var/gitpod` to store the workspace files, etc into `tmp/gitpod` temporary directory
+- `--name gitpod` to set the name of the docker container for further access.
+- `gitpod:/var/gitpod` to store the workspace files, etc into the `gitpod` volume.
 
 ## Accessing Gitpod
 
-As this is a self-signed instance of Gitpod, the gitpod root CA cert has to be imported into your browser manually to access the full functionality of Gitpod. This can be done by going into your browser settings and importing the certificate present at `tmp/gitpod/gitpod-ca.crt`. Most browsers also require a restart before they can start to use the imported certificate.
-
-Once the certificate is loaded, The URL to access the Gitpod instance can be retrieved by running:
+As this is a self-signed instance of Gitpod, the gitpod root CA cert has to be imported into your browser manually to access the full functionality of Gitpod. The certificate can be retrieved by running
 
 ```bash
-docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' gitpod |  sed -r 's/[.]+/-/g' | sed 's/$/.nip.io/g'
+docker cp gitpod:/var/gitpod/gitpod-ca.crt $HOME/gitpod-ca.crt
 ```
 
-The URL will be in the form of `<ip-address>.nip.io`. [nip.io](https://nip.io/) is just wildcard DNS for local addresses, so all off this is local, and cannot be accessed over the internet.
+This certificate at `$HOME/gitpod-ca.crt` can then be loaded into your browser. Most browsers also require a restart before they can start to use the imported certificate.
+
+Once the certificate is loaded, The URL to access the Gitpod instance is the same `$DOMAIN` env variable that was passed in the run command.
 
 Open your Gitpod URL in your browser to access your running Gitpod instance. The first screen you see will ask you to configure a git integration. This git integration will also serve as the way that you and your users authenticated against Gitpod. You can find out more in the [integrations](../../integrations) section.
 
