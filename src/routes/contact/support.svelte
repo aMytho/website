@@ -17,8 +17,12 @@
   import Button from "$lib/components/ui-library/button";
   import Card from "$lib/components/ui-library/card";
   import { scrollToElement } from "$lib/utils/helpers";
+  import { cloudPlatforms, noOfEngineers } from "$lib/contents/contact";
+  import Select from "$lib/components/ui-library/select/select.svelte";
 
   const studentUnlimitedSubject = "Educational Discount Verification";
+
+  const selfHostingSubject = "Self-hosting Gitpod";
 
   const otherSubject = "Other";
   const subjects = [
@@ -26,10 +30,17 @@
     "Issue",
     "Billing",
     studentUnlimitedSubject,
-    "Self-hosting Gitpod",
+    selfHostingSubject,
     "Open Source Sponsorship",
     otherSubject,
   ];
+
+  let isCloudPlatformsSelectShown = false;
+  let cloudInfrastructure = {
+    el: null,
+    valid: false,
+    value: "",
+  };
 
   let isStudentEmailNoteShown: boolean = false;
   let sectionStart: HTMLElement;
@@ -51,6 +62,16 @@
       valid: false,
       value: "",
     },
+    company: {
+      el: null,
+      valid: false,
+      value: "",
+    },
+    noOfEngineers: {
+      el: null,
+      valid: false,
+      value: "",
+    },
     message: {
       el: null,
       valid: false,
@@ -67,6 +88,18 @@
       value: "",
     },
   };
+
+  $: if (formData.selectedSubject.value == selfHostingSubject) {
+    isCloudPlatformsSelectShown = true;
+    formData.cloudInfrastructure = cloudInfrastructure;
+  } else {
+    isCloudPlatformsSelectShown = false;
+    delete formData.cloudInfrastructure;
+  }
+
+  $: isSelfHostedSelected =
+    isCloudPlatformsSelectShown && formData.cloudInfrastructure;
+
   let isFormDirty = false;
   let isEmailSent = false;
 
@@ -106,7 +139,24 @@
         "  (from " +
         formData.email.value +
         ")",
-      message: formData.message.value,
+      message: `
+          ${
+            isCloudPlatformsSelectShown
+              ? `Cloud Infrastructure: ${formData.cloudInfrastructure.value}`
+              : ""
+          }
+          ${
+            isCloudPlatformsSelectShown
+              ? `Company: ${formData.company.value}`
+              : ""
+          }
+          Message: ${formData.message.value}
+          ${
+            isCloudPlatformsSelectShown
+              ? `Total number of engineers: ${formData.noOfEngineers.value}`
+              : ""
+          }
+      `,
     };
 
     try {
@@ -254,6 +304,57 @@
                 autocomplete="email"
               />
             </li>
+            {#if isSelfHostedSelected}
+              <li class:error={isFormDirty && !formData.selectedSubject.valid}>
+                <Select
+                  hasError={isFormDirty && !formData.cloudInfrastructure.valid}
+                  name="cloudInfrastructure"
+                  bind:value={formData.cloudInfrastructure.value}
+                  on:change={(e) => {
+                    formData.cloudInfrastructure.valid =
+                      formData.cloudInfrastructure.value &&
+                      // @ts-ignore
+                      e.target.validity.valid;
+                  }}
+                  options={cloudPlatforms}
+                  placeholder="Which cloud infrastructure do you use?"
+                  class="max-w-md"
+                />
+              </li>
+              <li class:error={isFormDirty && !formData.selectedSubject.valid}>
+                <Select
+                  placeholder="Total number of engineers"
+                  hasError={isFormDirty && !formData.noOfEngineers.valid}
+                  name="noOfEngineers"
+                  bind:value={formData.noOfEngineers.value}
+                  bind:element={formData.noOfEngineers.el}
+                  on:change={() => {
+                    formData.noOfEngineers.valid =
+                      formData.noOfEngineers.value &&
+                      formData.noOfEngineers.el.checkValidity();
+                  }}
+                  options={noOfEngineers}
+                  class="max-w-md"
+                />
+              </li>
+              <li class:error={isFormDirty && !formData.company.valid}>
+                <Input
+                  label="Company"
+                  hasError={isFormDirty && !formData.company.valid}
+                  id="company"
+                  name="company"
+                  bind:value={formData.company.value}
+                  bind:element={formData.company.el}
+                  on:change={() => {
+                    formData.company.valid =
+                      formData.company.value &&
+                      formData.company.el.checkValidity();
+                  }}
+                  type="text"
+                  autocomplete="organization"
+                />
+              </li>
+            {/if}
             <li>
               <Textarea
                 id="message"
