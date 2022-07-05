@@ -35,7 +35,7 @@
   </div>
   <slot />
   <button class="pt-x-small w-64" on:click={() => toggleIsShown()}>
-    <div class="">
+    <div>
       <span
         class="underline hover:decoration-transparent transition-all delay-[50ms] duration-200"
       >
