@@ -27,7 +27,7 @@
         </h4>
       {/if}
       {#each firstEntry.items as item}
-        <div class="mt-micro">
+        <div class="">
           <FeatureTableItem definition={item} />
         </div>
       {/each}
@@ -39,7 +39,7 @@
               {entry.users}
             </h4>
             {#each entry.items as item}
-              <div class="mt-micro">
+              <div class="">
                 <FeatureTableItem definition={item} />
               </div>
             {/each}
