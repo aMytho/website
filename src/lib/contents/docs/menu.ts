@@ -104,6 +104,8 @@ export const MENU: MenuEntry[] = [
     M("Required Components", "self-hosted/latest/required-components"),
     M("Advanced Installation", "self-hosted/latest/advanced"),
     M("Updating Gitpod", "self-hosted/latest/updating"),
+    M("Backup and Restore", "self-hosted/latest/backup-restore"),
+    M("Disaster Recovery", "self-hosted/latest/disaster-recovery"),
     M("Monitoring", "self-hosted/latest/monitoring"),
     M("Troubleshooting", "self-hosted/latest/troubleshooting", [
       M("Support Bundles", "self-hosted/latest/support-bundle", []),
