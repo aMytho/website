@@ -102,13 +102,6 @@ const handleCustomers = async ({ event, resolve }) => {
 
 const handleHeaders = async ({ event, resolve }) => {
   const response = await resolve(event);
-  response.headers.set(
-    "Set-Cookie",
-    // If you change the cookie, please also change it in src/routes/__layout.svelte
-    `gitpod-marketing-website-visited=true; Domain=.gitpod.io; Path=/; max-age=${
-      365 * 24 * 60 * 60
-    }`
-  );
   // Avoid clickjacking attacks, see https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html
   response.headers.set(
     "Content-Security-Policy",
