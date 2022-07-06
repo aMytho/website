@@ -18,12 +18,12 @@ In order to deploy Gitpod on the [Google Kubernetes Engine (GKE)](https://cloud.
 
 At first, [create a GCP project](https://cloud.google.com/resource-manager/docs/creating-managing-projects) and [enable billing](https://cloud.google.com/billing/docs/concepts) (you have to enable billing to enable GKE). You can freely choose a name for your project (hereinafter referred to as environment variable `PROJECT_NAME`). You also need the billing account ID (referred to as `BILLING_ACCOUNT`). To see available lDs, run [`gcloud alpha billing accounts list`](https://cloud.google.com/sdk/gcloud/reference/alpha/billing/accounts/list).
 
-```
+```bash
 PROJECT_NAME=gitpod
 gcloud projects create "${PROJECT_NAME}" --set-as-default
 
 BILLING_ACCOUNT=0X0X0X-0X0X0X-0X0X0X
-gcloud alpha billing projects link "${PROJECT_NAME}" \\
+gcloud alpha billing projects link "${PROJECT_NAME}" \
     --billing-account "${BILLING_ACCOUNT}"
 ```
 

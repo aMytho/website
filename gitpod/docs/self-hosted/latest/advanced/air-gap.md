@@ -44,11 +44,11 @@ $ kubectl kots help
 
 At first, you need to push the images that are needed for the installation admin console to your registry.
 
-```
-$ kubectl kots admin-console push-images \\
-    ./kotsadm.tar.gz \\
-    <registry> \\
-    --registry-username <username> \\
+```bash
+$ kubectl kots admin-console push-images \
+    ./kotsadm.tar.gz \
+    <registry> \
+    --registry-username <username> \
     --registry-password <password>
 ```
 
@@ -62,11 +62,11 @@ Replace the following placeholder:
 
 Next, you can start installing Gitpod like this:
 
-```
-$ kubectl kots install gitpod \\
-    --kotsadm-namespace <namespace> \\
-    --kotsadm-registry <registry> \\
-    --registry-username <username> \\
+```bash
+$ kubectl kots install gitpod \
+    --kotsadm-namespace <namespace> \
+    --kotsadm-registry <registry> \
+    --registry-username <username> \
     --registry-password <password>
 ```
 
