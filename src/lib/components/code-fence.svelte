@@ -37,25 +37,27 @@
   <div
     class="sticky bg-sand-dark dark:bg-light-black top-0 left-0 z-10 py-1 flex items-center"
   >
-    {#if title}
-      <span class="ml-4 font-mono">{tag}</span>
-    {:else}
-      <div class="ml-4 flex items-center">
-        <div class="flex items-center gap-1">
-          <img
-            class="dark:hidden"
-            src="/svg/docs/language.svg"
-            alt="language icon"
-          />
-          <img
-            class="hidden dark:block"
-            src="/svg/docs/language-dark.svg"
-            alt="language icon"
-          />
-          <span class="font-semibold text-important">language:&nbsp;</span>
+    {#if tag}
+      {#if title}
+        <span class="ml-4">{tag}</span>
+      {:else}
+        <div class="ml-4 flex items-center">
+          <div class="flex items-center gap-1">
+            <img
+              class="dark:hidden"
+              src="/svg/docs/language.svg"
+              alt="language icon"
+            />
+            <img
+              class="hidden dark:block"
+              src="/svg/docs/language-dark.svg"
+              alt="language icon"
+            />
+            <span class="font-semibold text-important">language:&nbsp;</span>
+          </div>
+          <span class="text-important">{tag}</span>
         </div>
-        <span class="text-important">{tag}</span>
-      </div>
+      {/if}
     {/if}
     <div class="flex-1" />
     <button
