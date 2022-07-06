@@ -68,6 +68,14 @@ export const authors: { [idx: string]: Author } = {
     },
     description: "",
   },
+  "mustard-mh": {
+    name: "Huiwen Huang",
+    socialProfiles: {
+      github: "mustard-mh",
+      twitter: "",
+    },
+    description: "",
+  },
   aledbf: {
     name: "Manuel Alejandro de Brito Fontes",
     socialProfiles: {
