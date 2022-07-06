@@ -12,6 +12,7 @@
   let isToggleShown: boolean = false;
   let linksWrapper: HTMLElement;
   let iconWrapper: HTMLElement;
+  let isButtonActive: boolean = false;
 
   const buttons: {
     text: string;
@@ -48,14 +49,21 @@
 
   onMount(() => {
     window.addEventListener("click", handleClickOutside);
+    const query = window.matchMedia("(max-width: 900px)");
 
-    setTimeout(() => {
-      isToggleShown = true;
-
+    if (query.matches) {
       setTimeout(() => {
-        areButtonsShown = true;
-      }, 500);
-    }, 5000);
+        isToggleShown = true;
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        isToggleShown = true;
+
+        setTimeout(() => {
+          areButtonsShown = true;
+        }, 500);
+      }, 5000);
+    }
 
     return () => {
       window.removeEventListener("click", handleClickOutside);
@@ -92,6 +100,24 @@
       @apply absolute rounded-full top-0 right-0 bottom-0 left-0 z-50;
     }
   }
+
+  button.stroked {
+    &:hover,
+    &:focus {
+      &::after {
+        @apply bg-white;
+      }
+    }
+  }
+
+  :global(body.dark) button.stroked {
+    &:hover,
+    &:focus {
+      &::after {
+        @apply bg-black;
+      }
+    }
+  }
 </style>
 
 <div
@@ -99,22 +125,34 @@
   data-analytics={`{"context":"contact_widget"}`}
 >
   {#if areButtonsShown}
-    <div data-analytics={`{"label":"Close Contact Widget"}`}>
-      <button
-        on:click={() => (areButtonsShown = false)}
-        in:fade={{ duration: 200, delay: 300 }}
-        out:fade={{ duration: 300 }}
-        aria-label="Close the menu"
-      >
-        <Close class="h-6 w-6 mb-macro" />
-      </button>
-    </div>
     <div
       in:fade={{ duration: 600 }}
       out:fade={{ duration: 300 }}
       bind:this={linksWrapper}
-      class="stroked stroked-sand flex flex-col rounded-2xl mb-5 sm:mb-xx-small links p-3 sm:p-xx-small"
+      class="stroked stroked-sand flex flex-col rounded-2xl mb-5 sm:mb-xx-small links px-3 pb-3 pt-9 sm:p-xx-small sm:pt-9 shadow-light
+      "
     >
+      <div data-analytics={`{"label":"Close Contact Widget"}`}>
+        <button
+          on:click={() => (areButtonsShown = false)}
+          aria-label="Close the menu"
+          class="absolute right-[7px] top-[7px] sm:right-[10px] sm:top-[10px]"
+          on:mouseenter={() => {
+            isButtonActive = true;
+          }}
+          on:mouseleave={() => {
+            isButtonActive = false;
+          }}
+          on:focus={() => {
+            isButtonActive = true;
+          }}
+          on:blur={() => {
+            isButtonActive = false;
+          }}
+        >
+          <Close class="h-[18px] w-[18px]" active={isButtonActive} />
+        </button>
+      </div>
       <div class="before" />
       <div class="space-y-macro">
         {#each buttons as { href, text, icon }}
@@ -149,9 +187,8 @@
         <div class="icon-wrapper" bind:this={iconWrapper}>
           <svelte:component
             this={Chat}
-            class="h-6 w-6 sm:h-8 sm:w-8 filter group-hover:grayscale transition-all duration-200 {areButtonsShown
-              ? 'grayscale'
-              : ''}"
+            class="h-6 w-6 sm:h-8 sm:w-8 transition-all duration-200"
+            id="toggle-button"
           />
         </div>
       </button>
